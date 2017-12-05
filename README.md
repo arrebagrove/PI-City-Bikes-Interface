@@ -6,15 +6,18 @@ Custom interface developed using PI AF SDK which retrieves data from CityBikes A
 
 ## Installation
 
-Copy all the files from the dist folder to the %PIHOME%\Interface\PICityBikes. 
+Copy all the files from the dist folder to the **%PIHOME%\Interface\PICityBikes**. 
 
 Then run the following commands to create the Windows Service:
 
+```
 PICityBikes.Service.exe --install
-
+```
 Delete the Windows Service using the command below:
 
+```
 PICityBikes.Service.exe --uninstall
+```
 
 ## Configuration
 
@@ -28,7 +31,7 @@ createObjects --> If it is true, the interface will create AF element and attrib
 
 ## Troubleshooting
 
-The interface will save the logs in the PICityBikes.Core.log file located on the interface folder.
+The interface will save the logs in the **PICityBikes.Core.log** file located on the interface folder.
 
 
 ## Licensing
