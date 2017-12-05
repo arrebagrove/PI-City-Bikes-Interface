@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PICityBikes.Core", "PICityBikes.Core\PICityBikes.Core.csproj", "{17AB09DC-36EF-4035-B168-125C4AE88834}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PICityBikes.Service", "PICityBikes.Service\PICityBikes.Service.csproj", "{F25CEA58-415C-492B-8F1C-417832ED8B22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17AB09DC-36EF-4035-B168-125C4AE88834}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17AB09DC-36EF-4035-B168-125C4AE88834}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17AB09DC-36EF-4035-B168-125C4AE88834}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17AB09DC-36EF-4035-B168-125C4AE88834}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F25CEA58-415C-492B-8F1C-417832ED8B22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F25CEA58-415C-492B-8F1C-417832ED8B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F25CEA58-415C-492B-8F1C-417832ED8B22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F25CEA58-415C-492B-8F1C-417832ED8B22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
