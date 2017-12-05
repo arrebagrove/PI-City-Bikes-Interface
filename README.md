@@ -23,11 +23,11 @@ PICityBikes.Service.exe --uninstall
 
 Before starting the interface, open PICityBikes.Service.exe.config and edit it according to the information below:
 
-piServer --> PI Data Archive name
-afServer --> AF Server name
-afDatabase --> AF Database name
-secondsToWait --> Number of seconds idle between cycles. Each cycle gets the full data available on the API.
-createObjects --> If it is true, the interface will create AF element and attribute templates as well as missing PI Points. If set to false, it will get the values directly assuming that the required objects already exist on the system.
+- piServer | PI Data Archive name
+- afServer | AF Server name
+- afDatabase | AF Database name
+- secondsToWait | Number of seconds idle between cycles. Each cycle gets the full data available on the API.
+- createObjects | If it is true, the interface will create AF element and attribute templates as well as missing PI Points. If set to false, it will get the values directly assuming that the required objects already exist on the system.
 
 ## Troubleshooting
 
