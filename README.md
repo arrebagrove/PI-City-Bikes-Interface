@@ -21,7 +21,7 @@ PICityBikes.Service.exe --uninstall
 
 ## Configuration
 
-Before starting the interface, open PICityBikes.Service.exe.config and edit it according to the information below:
+Before starting the interface, open **PICityBikes.Service.exe.config** and edit it according to the information below:
 
 
 Parameter | Description
