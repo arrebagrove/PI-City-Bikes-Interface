@@ -39,5 +39,7 @@ namespace PICityBikes.Core
                     .Replace('`', ' ');
             }
         }
+
+        public int StationNumber { get; internal set; }
     }
 }

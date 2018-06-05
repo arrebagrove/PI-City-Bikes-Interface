@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Diagnostics;
 
 namespace PICityBikes.Core
 {
@@ -9,6 +9,7 @@ namespace PICityBikes.Core
 
     }
 
+    [DebuggerDisplay("Name = {Name}")]
     public class Network
     {
         public string CompanyString
@@ -39,8 +40,14 @@ namespace PICityBikes.Core
         {
             get
             {
-                return Name
-                    .Replace('ô', 'o')
+                return GetFixedName(this.Name) + "  " + GetFixedName(this.Location.City.ToString());
+
+            }
+        }
+
+        public string GetFixedName(string name)
+        {
+            return name.Replace('ô', 'o')
                     .Replace('*', ' ')
                     .Replace('?', ' ')
                     .Replace(';', ' ')
@@ -55,8 +62,10 @@ namespace PICityBikes.Core
                     .Replace('"', ' ')
                     .Replace('/', ' ')
                     .Replace('`', ' ');
-            }
         }
+
+        public int CityNumber { get; set; }
+
         public Network()
         {
             Location = new Location();

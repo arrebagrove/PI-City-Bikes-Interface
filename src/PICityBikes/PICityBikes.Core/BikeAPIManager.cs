@@ -13,16 +13,18 @@ namespace PICityBikes.Core
 {
     public class BikeAPIManager
     {
-        private static string baseUrl = "http://api.citybik.es";
-        public static Networks GetAllCities()
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        public async Task<Networks> GetAllCities()
         {
-            string response = GetJsonReponse(baseUrl + "/v2/networks");
-            dynamic dObj = JObject.Parse(response);
             Networks networks = new Networks();
+            Dictionary<string, string> test = new Dictionary<string, string>();
+            dynamic dObj = await CustomHttpRequest.Instance.GetAllNetworksData();
+
             for (int i = 0; i < dObj["networks"].Count; i++)
             {
                 Network network = new Network();
-
+                network.CityNumber = i + 1;
                 if (dObj["networks"][i].company == null)
                 {
                     network.Company = null;
@@ -47,26 +49,38 @@ namespace PICityBikes.Core
                 network.Location.Latitude = Convert.ToDouble(dObj["networks"][i].location.latitude.Value.ToString());
                 network.Location.Longitude = Convert.ToDouble(dObj["networks"][i].location.longitude.Value.ToString());
                 network.Location.Country = dObj["networks"][i].location.country.Value.ToString();
-                networks.Add(network);
-
+                if (test.Keys.ToList().Where(k => k == network.FixedName).Count() == 0)
+                {
+                    test.Add(network.FixedName, "a");
+                    networks.Add(network);
+                }
             }
-
-
             return networks;
         }
 
 
-        public static List<BikeStation> GetCityBikeStations(Network network)
-        {
-            string response = GetJsonReponse(baseUrl + network.Href);
 
-            dynamic dObj = JObject.Parse(response);
+
+        public static string ToFirstUpperCase(string name)
+        {
+            return name[0].ToString().ToUpper() + name.Substring(1);
+        }
+
+        public async Task<List<BikeStation>> GetCityBikeStations(Network network)
+        {
+
+            dynamic dObj = await CustomHttpRequest.Instance.GetNetworkStationsData(network);
+            if (dObj == null)
+            {
+                return new List<BikeStation>();
+            }
             List<BikeStation> bikeStationList = new List<BikeStation>();
             if (dObj["network"]["stations"] != null)
             {
                 for (int i = 0; i < dObj["network"]["stations"].Count; i++)
                 {
                     BikeStation bikeStation = new BikeStation();
+                    bikeStation.StationNumber = i + 1;
                     if (dObj["network"]["stations"][i].empty_slots != null)
                     {
                         bikeStation.empty_slots = Convert.ToInt32(dObj["network"]["stations"][i].empty_slots.Value.ToString());
@@ -81,18 +95,38 @@ namespace PICityBikes.Core
                     bikeStation.name = dObj["network"]["stations"][i].name.Value.ToString();
                     bikeStation.timestamp = DateTime.Now;
                     bikeStationList.Add(bikeStation);
+                    //if (IsValid(bikeStation.name))
+                    //{
+                    //    bikeStationList.Add(bikeStation);
+                    //}
+                    //else
+                    //{
+                    //    log.Info($"{bikeStation.name} is not a valid name. ");
+                    //}
+
                 }
             }
 
             return bikeStationList;
         }
 
-        private static string GetJsonReponse(string url)
+        private bool IsValid(string name)
         {
-            WebRequest request = WebRequest.Create(url);
-            WebResponse response = request.GetResponse();
-            StreamReader sw = new StreamReader(response.GetResponseStream());
-            return sw.ReadToEnd();
+            name = name
+              .Replace("`", string.Empty)
+              .Replace("'", string.Empty)
+              .Replace(":", string.Empty)
+              .Replace("°", string.Empty)
+              .Replace(".", string.Empty)
+              .Replace("*", string.Empty)
+              .Replace("!", string.Empty)
+              .Replace("+", string.Empty)
+              .Replace(",", string.Empty)
+              .Replace("#", string.Empty)
+              .Replace("-", string.Empty)
+              .Replace("'", string.Empty)
+              .Replace(".", string.Empty).Trim();
+            return name.All(c => Char.IsLetterOrDigit(c) || c.Equals('-') || c.Equals('@') || c.Equals(' ') || c.Equals('.') || c.Equals('\\') || c.Equals('"') || c.Equals('\'') || c.Equals('(') || c.Equals(')') || c.Equals('&') || c.Equals('|') || c.Equals('/') || c.Equals(',') || c.Equals('-') || c.Equals('_'));
         }
     }
 }
